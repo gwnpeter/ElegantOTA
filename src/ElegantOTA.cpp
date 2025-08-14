@@ -27,6 +27,15 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
       response->addHeader("Content-Encoding", "gzip");
       request->send(response);
     });
+
+	_server->on("/ota/info", HTTP_GET, [&](AsyncWebServerRequest *request){
+	   String response = "{";
+	   response += "\"hardware_serial\":\"" + HwSerial + "\",";
+	   response += "\"software_version\":\"" + SwVersion + "\",";
+	   response += "\"board_info\":\"" + BoardInfo + "\"";
+	   response += "}";
+	   request->send(200, "application/json", response);
+	});
   #else
     _server->on("/update", HTTP_GET, [&](){
       if (_authenticate && !_server->authenticate(_username.c_str(), _password.c_str())) {
@@ -35,6 +44,15 @@ void ElegantOTAClass::begin(ELEGANTOTA_WEBSERVER *server, const char * username,
       _server->sendHeader("Content-Encoding", "gzip");
       _server->send_P(200, "text/html", (const char*)ELEGANT_HTML, sizeof(ELEGANT_HTML));
     });
+
+	_server.on("/ota/info", HTTP_GET, [&](){
+	   String response = "{";
+	   response += "\"hardware_serial\":\"" + HwSerial + "\",";
+	   response += "\"software_version\":\"" + SwVersion + "\",";
+	   response += "\"board_info\":\"" + BoardInfo + "\"";
+	   response += "}";
+	   _server->send(200, "application/json", response);
+	});
   #endif
 
   #if ELEGANTOTA_USE_ASYNC_WEBSERVER == 1

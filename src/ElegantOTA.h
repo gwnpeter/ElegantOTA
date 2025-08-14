@@ -120,7 +120,10 @@ class ElegantOTAClass{
     void onStart(std::function<void()> callable);
     void onProgress(std::function<void(size_t current, size_t final)> callable);
     void onEnd(std::function<void(bool success)> callable);
-    
+    String HwSerial = "00000000";
+    String SwVersion = "1.00";
+    String BoardInfo = "DEMO";
+
   private:
     ELEGANTOTA_WEBSERVER *_server;
 
