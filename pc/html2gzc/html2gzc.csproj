@@ -9,7 +9,7 @@
     <InvariantGlobalization>true</InvariantGlobalization>
     <StartupObject>html2gzc.Program</StartupObject>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="McuCvtDll" Version="1.0.6" />
+    <PackageReference Include="McuCvtDll" Version="1.0.7" />
   </ItemGroup>
 
 </Project>
