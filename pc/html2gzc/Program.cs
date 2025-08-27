@@ -47,7 +47,7 @@ namespace html2gzc
             var inTxt = File.ReadAllText(inPath);
             RmAnnotate nt = new();
             inTxt = nt.Convert(inTxt);
-            inTxt = inTxt.Substring(inTxt.IndexOf('{') + 1);
+            inTxt = inTxt.Substring(inTxt.LastIndexOf('{') + 1);
             inTxt = inTxt.Substring(0, inTxt.LastIndexOf('}'));
             inTxt = inTxt.Replace(@" ", "");
             inTxt = inTxt.Replace("\t", "");
@@ -76,9 +76,15 @@ namespace html2gzc
                     gzBuf.Add(dt);
                 }
             }
-
-            var outHtml = Decompress(gzBuf.ToArray());
-            File.WriteAllBytes(outPath + ".html", outHtml);
+            try
+            {
+                var outHtml = Decompress(gzBuf.ToArray());
+                File.WriteAllBytes(outPath + ".html", outHtml);
+            }
+            catch {
+                var outHtml = gzBuf.ToArray();
+                File.WriteAllBytes(outPath + ".html", outHtml);
+            }
         }
 
         private static void Gzip2Cpp(string inPath)
